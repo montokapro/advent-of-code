@@ -1,4 +1,4 @@
-#lang racket/base
+#lang racket
 
 (require racket/file)
 (require csv-reading)
@@ -20,14 +20,30 @@
   (define b (smallest-side a))
   (+ b (* (foldr + 0 a) 2)))
 
-(define (total dimensions)
-  (foldr + 0 (map (λ (a) (size a)) dimensions)))
+(define (total dimensions-list)
+  (foldr + 0 (map (λ (a) (size a)) dimensions-list)))
+
+(define (smallest-perimeter dimensions)
+  (* 2 (foldr + 0 (take (sort dimensions <) 2))))
+
+(define (volume dimensions)
+  (foldr * 1 dimensions))
+
+(define (ribbon dimensions)
+  (+ (smallest-perimeter dimensions) (volume dimensions)))
+
+(define (ribbon-total dimensions-list)
+  (foldr + 0 (map (λ (a) (ribbon a)) dimensions-list)))
 
 (define make-dimensions-csv-reader
   (make-csv-reader-maker
    '((separator-chars #\x))))
 
-(total
+(define dimensions-list
  (map
   (λ (a) (map string->number a))
   (csv->list (make-dimensions-csv-reader (open-input-file "input.txt")))))
+
+(list
+ (total dimensions-list)
+ (ribbon-total dimensions-list))

@@ -27,3 +27,15 @@
   (check-equal?
    (total '((1 1 1) (2 3 4) (1 1 10)))
    108))
+
+(test-case "smallest perimeter - official"
+  (check-equal? (smallest-perimeter '(2 3 4)) 10)
+  (check-equal? (smallest-perimeter '(1 1 10)) 4))
+
+(test-case "volume - official"
+  (check-equal? (volume '(2 3 4)) 24)
+  (check-equal? (volume '(1 1 10)) 10))
+
+(test-case "ribbon - official"
+  (check-equal? (ribbon '(2 3 4)) 34)
+  (check-equal? (ribbon '(1 1 10)) 14))
